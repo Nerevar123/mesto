@@ -9,6 +9,26 @@
   min-height: 40px;
 }
 
+.popup__input::-webkit-input-placeholder {
+  color: black;
+  opacity: 1;
+}
+
+.popup__input::-moz-placeholder {
+  color: black;
+  opacity: 1;
+}
+
+.popup__input:-ms-input-placeholder {
+  color: black;
+  opacity: 1;
+}
+
+.popup__input::-ms-input-placeholder {
+  color: black;
+  opacity: 1;
+}
+
 .popup__input::placeholder {
   color: black;
   opacity: 1;

@@ -1,3 +1,5 @@
-.popup__opened {
+.popup_opened {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }

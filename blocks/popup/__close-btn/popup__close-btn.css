@@ -14,9 +14,10 @@
 
 @media screen and (max-width: 768px){
   .popup__close-btn {
-    width: 20px;
-    height: 20px;
-    top: -25px;
-    right: -25px;
+    top: 100%;
+    right: 50%;
+    -webkit-transform: translate(50%, 50%);
+        -ms-transform: translate(50%, 50%);
+            transform: translate(50%, 50%);
   }
 }
