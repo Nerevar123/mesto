@@ -4,3 +4,7 @@
   height: 22px;
   border: 0;
 }
+
+.place__like-btn:hover {
+  opacity: 0.6;
+}

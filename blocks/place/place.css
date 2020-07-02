@@ -3,3 +3,8 @@
 @import url(./__image/place__image.css);
 @import url(./__title/place__title.css);
 
+.place {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
