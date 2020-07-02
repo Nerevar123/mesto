@@ -6,6 +6,7 @@
   -o-text-overflow: ellipsis;
      text-overflow: ellipsis;
   overflow: hidden;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 768px){

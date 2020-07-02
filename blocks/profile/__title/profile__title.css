@@ -9,9 +9,10 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-       white-space: nowrap;
-       overflow: hidden;
-       margin-right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 8px;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 768px){
@@ -20,5 +21,6 @@
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 28px;
+    margin-right: 0;
   }
 }

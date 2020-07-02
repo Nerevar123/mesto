@@ -1,20 +1,14 @@
 @import url(./__logo/header__logo.css);
 
 .header {
-  min-height: 120px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  padding-top: 44px;
+  padding-bottom: 40px;
   border-bottom: 1px solid rgb(84, 84, 84, 0.7);
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px){
   .header {
-    min-height: 84px;
+    padding-top: 28px;
+    padding-bottom: 32px;
   }
 }
