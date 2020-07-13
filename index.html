@@ -72,24 +72,25 @@
           </li>
         </ul>
       </section>
-      <section class="popup">
-        <div class="popup__container">
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="popup__form" name="profile-edit" method="GET" action="#">
-            <fieldset class="popup__fields">
-              <input type="text" class="popup__input popup__input_type_name">
-              <input type="text" class="popup__input popup__input_type_desc">
-            </fieldset>
-            <button class="popup__save-btn button" type="submit">Сохранить</button>
-          </form>
-          <button class="popup__close-btn button" type="button"></button>
-        </div>
-      </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <script src="./scripts/script.js"></script>
   </div>
+  <section class="popup">
+    <!-- modal -->
+    <div class="popup__container">
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="popup__form" name="profile-edit" method="GET" action="#">
+        <fieldset class="popup__fields">
+          <input type="text" class="popup__input popup__input_type_name">
+          <input type="text" class="popup__input popup__input_type_desc">
+        </fieldset>
+        <button class="popup__save-btn button" type="submit">Сохранить</button>
+      </form>
+      <button class="popup__close-btn button" type="button"></button>
+    </div>
+  </section>
+  <script src="./scripts/script.js"></script>
 </body>
 </html>
