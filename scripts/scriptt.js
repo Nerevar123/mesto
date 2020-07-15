@@ -1,20 +1,20 @@
-const places = document.querySelector('.places__list');
+const editButton = document.querySelector('.profile__edit-btn');
+const placeButton = document.querySelector('.profile__add-btn');
+const closeTitleButton = document.querySelector('.modal__close-btn_type_title');
+const closePlaceButton = document.querySelector('.modal__close-btn_type_place');
+const closeLBButton = document.querySelector('.modal__close-btn_type_lightbox');
+const nameProfile = document.querySelector('.profile__name');
+const descProfile = document.querySelector('.profile__desc');
 const titleModal = document.querySelector('.modal_type_title');
 const placeModal = document.querySelector('.modal_type_place');
 const lbModal = document.querySelector('.modal_type_lightbox');
-const editButton = document.querySelector('.profile__edit-btn');
-const placeButton = document.querySelector('.profile__add-btn');
-const nameProfile = document.querySelector('.profile__name');
-const descProfile = document.querySelector('.profile__desc');
+const nameInput = document.querySelector('.modal__input_type_name');
+const descInput = document.querySelector('.modal__input_type_desc');
+const placeInput = document.querySelector('.modal__input_type_place');
+const linkInput = document.querySelector('.modal__input_type_link');
 const formTitle = document.querySelector('.modal__form_type_title');
 const formPlace = document.querySelector('.modal__form_type_place');
-const closeTitleButton = titleModal.querySelector('.modal__close-btn');
-const closePlaceButton = placeModal.querySelector('.modal__close-btn');
-const closeLBButton = lbModal.querySelector('.modal__close-btn');
-const nameInput = formTitle.querySelector('.modal__input_type_name');
-const descInput = formTitle.querySelector('.modal__input_type_desc');
-const placeInput = formPlace.querySelector('.modal__input_type_place');
-const linkInput = formPlace.querySelector('.modal__input_type_link');
+const places = document.querySelector('.places__list');
 
 function renderPlaces () {
   const initialCards = [
@@ -55,12 +55,12 @@ function renderPlaces () {
   });
 };
 
-function createPlace (placeName, placeLink) {
+function createPlace (placeName, placeLink,) {
   const placeTemplate = document.querySelector('#place-template').content;
   const placeElem = placeTemplate.cloneNode(true);
   placeElem.querySelector('.place__title').textContent = placeName;
   placeElem.querySelector('.place__image').src = placeLink;
-  placeElem.querySelector('.place__image').alt = 'Загруженное изображение';
+  placeElem.querySelector('.place__image').alt = 'Your image';
   placeElem.querySelector('.place__like-btn').addEventListener('click', function (evt) {
     evt.target.classList.toggle('place__like-btn_active');
   })
@@ -116,3 +116,15 @@ closePlaceButton.addEventListener('click', () => showModal(placeModal));
 closeLBButton.addEventListener('click', () => showModal(lbModal));
 formTitle.addEventListener('submit', formTitleSubmitHandler);
 formPlace.addEventListener('submit', formPlaceSubmitHandler);
+
+
+// const closeButton = document.querySelectorAll ('.modal__close-btn');
+// for (let i = 0; i < closeButton.length; i++) {
+//   closeButton[i].addEventListener("click", function (evt) {
+//     const modalParent = evt.target.closest('section');
+//     modalParent.classList.toggle('modal_opened');
+//   });
+// }
+
+
+

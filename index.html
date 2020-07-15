@@ -28,48 +28,6 @@
       </section>
       <section class="places">
         <ul class="places__list">
-          <li class="place">
-            <img src="./images/place-karachaev.png" alt="Карачаевск" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Карачаевск</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place-elbrus.png" alt="Гора Эльбрус" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Гора Эльбрус</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place-dombay.png" alt="Домбай" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Домбай</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place-olkhon.png" alt="Остров Ольхон" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Остров Ольхон, Байкал</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place-kamchatka.png" alt="Камчатка" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Камчатка</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place-vyborg.png" alt="Выборг" class="place__image">
-            <div class="place__header">
-              <h3 class="place__title">Выборг</h3>
-              <button class="place__like-btn button" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -77,20 +35,51 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
   </div>
-  <section class="popup">
-    <!-- modal -->
-    <div class="popup__container">
-      <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="profile-edit" method="GET" action="#">
-        <fieldset class="popup__fields">
-          <input type="text" class="popup__input popup__input_type_name">
-          <input type="text" class="popup__input popup__input_type_desc">
+  <section class="modal modal_type_title">
+    <div class="modal__container">
+      <h3 class="modal__title">Редактировать профиль</h3>
+      <form class="modal__form modal__form_type_title" name="profile-edit" method="GET" action="#">
+        <fieldset class="modal__fields">
+          <input type="text" class="modal__input modal__input_type_name">
+          <input type="text" class="modal__input modal__input_type_desc">
         </fieldset>
-        <button class="popup__save-btn button" type="submit">Сохранить</button>
+        <button class="modal__save-btn button" type="submit">Сохранить</button>
       </form>
-      <button class="popup__close-btn button" type="button"></button>
+      <button class="modal__close-btn button" type="button"></button>
     </div>
   </section>
+  <section class="modal modal_type_place">
+    <div class="modal__container">
+      <h3 class="modal__title">Новое место</h3>
+      <form class="modal__form modal__form_type_place" name="profile-edit" method="GET" action="#">
+        <fieldset class="modal__fields">
+          <input type="text" class="modal__input modal__input_type_place" placeholder="Название">
+          <input type="text" class="modal__input modal__input_type_link" placeholder="Ссылка на картинку">
+        </fieldset>
+        <button class="modal__save-btn button" type="submit">Создать</button>
+      </form>
+      <button class="modal__close-btn button" type="button"></button>
+    </div>
+  </section>
+  <section class="modal modal_type_lightbox">
+    <div class="modal__lightbox">
+      <figure class="modal__figure">
+        <img src="" alt="" class="modal__image">
+        <figcaption class="modal__caption"></figcaption>
+      </figure>
+      <button class="modal__close-btn button" type="button"></button>
+    </div>
+  </section>
+  <template id="place-template">
+    <li class="place">
+      <img src="" alt="" class="place__image">
+      <div class="place__header">
+        <h3 class="place__title"></h3>
+        <button class="place__like-btn button" type="button"></button>
+      </div>
+      <button class="place__delete-btn button" type="button"></button>
+    </li>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
