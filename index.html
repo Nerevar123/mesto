@@ -53,8 +53,8 @@
       <h3 class="modal__title">Новое место</h3>
       <form class="modal__form modal__form_type_place" name="profile-edit" method="GET" action="#">
         <fieldset class="modal__fields">
-          <input type="text" class="modal__input modal__input_type_place" placeholder="Название">
-          <input type="text" class="modal__input modal__input_type_link" placeholder="Ссылка на картинку">
+          <input type="text" class="modal__input modal__input_type_place" placeholder="Название*" required>
+          <input type="url" class="modal__input modal__input_type_link" placeholder="Ссылка на картинку">
         </fieldset>
         <button class="modal__save-btn button" type="submit">Создать</button>
       </form>
@@ -64,7 +64,7 @@
   <section class="modal modal_type_lightbox">
     <div class="modal__lightbox">
       <figure class="modal__figure">
-        <img src="" alt="" class="modal__image">
+        <img src="#" alt="" class="modal__image">
         <figcaption class="modal__caption"></figcaption>
       </figure>
       <button class="modal__close-btn button" type="button"></button>
@@ -72,7 +72,7 @@
   </section>
   <template id="place-template">
     <li class="place">
-      <img src="" alt="" class="place__image">
+      <img src="#" alt="" class="place__image">
       <div class="place__header">
         <h3 class="place__title"></h3>
         <button class="place__like-btn button" type="button"></button>
