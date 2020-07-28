@@ -58,6 +58,7 @@ function renderPlaces () {
 function createPlace (placeName, placeLink) {
   const placeTemplate = document.querySelector('#place-template').content;
   const placeElem = placeTemplate.cloneNode(true);
+  const place = placeElem.querySelector('.place');
   const placeImage = placeElem.querySelector('.place__image');
   placeElem.querySelector('.place__title').textContent = placeName;
   placeImage.src = placeLink;
@@ -65,7 +66,11 @@ function createPlace (placeName, placeLink) {
   placeElem.querySelector('.place__like-btn').addEventListener('click', function (evt) {
     evt.target.classList.toggle('place__like-btn_active');
   })
-  placeImage.addEventListener('click', () => showLbModal(event));
+  place.addEventListener('click', (evt) => {
+    if (evt.target.closest('.place__img-wrapper')) {
+      showLbModal(event);
+    }
+  })
   placeElem.querySelector('.place__delete-btn').addEventListener('click', function (evt) {
     evt.target.parentElement.remove();
   })
@@ -74,14 +79,14 @@ function createPlace (placeName, placeLink) {
 
 function renderPlace (place) {
   places.prepend(place);
-}
+};
 
-function showLbModal(evt) {
+function showLbModal (evt) {
   showModal(lbModal);
   const lbImage = document.querySelector('.modal__image');
   const lbCaption = document.querySelector('.modal__caption');
   lbImage.src = evt.target.src;
-  lbCaption.textContent = evt.target.nextElementSibling.textContent;
+  lbCaption.textContent = evt.target.parentElement.nextElementSibling.textContent;
 }
 
 function showModal (modal) {
@@ -96,7 +101,7 @@ function showModal (modal) {
     placeInput.value = '';
     linkInput.value = '';
   }
-}
+};
 
 function formPlaceSubmitHandler (evt) {
   evt.preventDefault();
@@ -112,7 +117,7 @@ function formTitleSubmitHandler (evt) {
   nameProfile.textContent = nameInput.value;
   descProfile.textContent = descInput.value;
   showModal(titleModal);
-}
+};
 
 editButton.addEventListener('click', () => showModal(titleModal));
 closeTitleButton.addEventListener('click', () => showModal(titleModal));
