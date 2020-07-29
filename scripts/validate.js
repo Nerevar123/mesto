@@ -22,6 +22,7 @@ const hideInputError = (form, input, inputErrorClass, errorClass) => {
 };
 
 const checkInputValidity = (form, input, options) => {
+  console.log(input);
   if (!input.validity.valid) {
     showInputError(form, input, input.validationMessage, options.inputErrorClass, options.errorClass);
   } else {
@@ -43,6 +44,12 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
     buttonElement.removeAttribute('disabled');
     buttonElement.classList.remove(inactiveButtonClass);
   };
+};
+
+const checkInput = (form, inputList, input, buttonElement, options) => {
+  checkInputValidity(form, input, options);
+  toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
+  isEmpty(form, input);
 };
 
 const isEmpty = (formElement, inputElement) => {
@@ -69,9 +76,7 @@ const setEventListeners = (form, options) => {
   const buttonElement = form.querySelector(options.submitButtonSelector);
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
-      checkInputValidity(form, input, options);
-      toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
-      isEmpty(form, input);
+      checkInput(form, inputList, input, buttonElement, options);
     });
   });
 };

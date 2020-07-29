@@ -82,11 +82,15 @@ const closeModalWithClick = (evt) => {
     };
 };
 
-const resetError = (modal) => {;
+const resetError = (modal) => {
+  const submitButton = modal.querySelector('.modal__save-btn');
   const inputs = Array.from(modal.querySelectorAll('.modal__input'));
   inputs.forEach((input) => {
-    hideInputError(modal, input, obj.inputErrorClass, obj.ErrorClass);
-    isEmpty(modal, input);
+    if (modal === placeModal) {
+      hideInputError(modal, input, obj.inputErrorClass, obj.errorClass);
+    } else {
+      checkInput(modal, inputs, input, submitButton, obj);
+    }
   });
 };
 
