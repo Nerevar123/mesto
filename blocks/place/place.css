@@ -4,6 +4,7 @@
 @import url(./__image/place__image.css);
 @import url(./__title/place__title.css);
 @import url(./__delete-btn/place__delete-btn.css);
+@import url(./__img-wrapper/place__img-wrapper.css);
 
 .place {
   border-radius: 10px;

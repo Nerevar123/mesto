@@ -26,13 +26,13 @@ const checkInputValidity = (form, input, options) => {
     showInputError(form, input, input.validationMessage, options.inputErrorClass, options.errorClass);
   } else {
     hideInputError(form, input, options.inputErrorClass, options.errorClass);
-  }
+  };
 };
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((input) => {
     return !input.validity.valid;
-});
+  });
 };
 
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
@@ -42,26 +42,31 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   } else {
     buttonElement.removeAttribute('disabled');
     buttonElement.classList.remove(inactiveButtonClass);
-  }
+  };
+};
+
+const isEmpty = (formElement, inputElement) => {
+  !inputElement.value.length >= 1 ? unfreezePlaceholder(formElement, inputElement) : freezePlaceholder(formElement, inputElement);
+};
+
+const freezePlaceholder = (formElement, inputElement) => {
+  const placeholderElement = formElement.querySelector(`#${inputElement.id}-placeholder`);
+  placeholderElement.classList.add('modal__placeholder_is-fixed');
+};
+
+const unfreezePlaceholder = (formElement, inputElement) => {
+  const placeholderElement = formElement.querySelector(`#${inputElement.id}-placeholder`);
+  placeholderElement.classList.remove('modal__placeholder_is-fixed');
 };
 
 const setEventListeners = (form, options) => {
   form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
     if (evt.target === formPlace) {
-      createPlace (placeInput.value, linkInput.value);
-      showModal(placeModal);
       toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
-    };
-    if (evt.target === formTitle) {
-      nameProfile.textContent = nameInput.value;
-      descProfile.textContent = descInput.value;
-      showModal(titleModal);
     };
   });
   const inputList = Array.from(form.querySelectorAll(options.inputSelector));
   const buttonElement = form.querySelector(options.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
       checkInputValidity(form, input, options);
