@@ -1,6 +1,7 @@
 .modal__container {
   margin: auto;
   max-width: 430px;
+  width: 100%;
   background-color: white;
   color: black;
   padding: 36px;
