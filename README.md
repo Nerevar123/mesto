@@ -16,6 +16,10 @@ https://nerevar123.github.io/mesto/index.html
 
 **Change-log**
 
+_v1.2_
+
+Добавлена валидация через JavaScript.
+
 _v1.1_
 
 Добавлен новый функционал JavaScript (возможность добавления места, Lightbox фотографий).
