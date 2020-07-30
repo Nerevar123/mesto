@@ -22,7 +22,6 @@ const hideInputError = (form, input, inputErrorClass, errorClass) => {
 };
 
 const checkInputValidity = (form, input, options) => {
-  console.log(input);
   if (!input.validity.valid) {
     showInputError(form, input, input.validationMessage, options.inputErrorClass, options.errorClass);
   } else {
@@ -68,9 +67,7 @@ const unfreezePlaceholder = (formElement, inputElement) => {
 
 const setEventListeners = (form, options) => {
   form.addEventListener('submit', (evt) => {
-    if (evt.target === formPlace) {
-      toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
-    };
+    toggleButtonState(inputList, buttonElement, options.inactiveButtonClass);
   });
   const inputList = Array.from(form.querySelectorAll(options.inputSelector));
   const buttonElement = form.querySelector(options.submitButtonSelector);
