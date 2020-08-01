@@ -64,9 +64,6 @@ const closeModalWithEsc = (evt) => {
     const openedModal = document.querySelector('.modal_opened');
     if (openedModal) {
       showModal(openedModal);
-      if (evt.target === placeModal) {
-        formPlace.reset();
-      };
     };
   };
 };
@@ -74,9 +71,6 @@ const closeModalWithEsc = (evt) => {
 const closeModalWithClick = (evt) => {
   if (evt.target.classList.contains('modal')) {
     showModal(evt.target);
-    if (evt.target === placeModal) {
-      formPlace.reset();
-    };
   };
 };
 
@@ -114,7 +108,6 @@ const formPlaceSubmitHandler = (evt) => {
   evt.preventDefault();
   createPlace (placeInput.value, linkInput.value);
   showModal(placeModal);
-  formPlace.reset();
 };
 
 editButton.addEventListener('click', () => {
@@ -126,11 +119,11 @@ editButton.addEventListener('click', () => {
 placeButton.addEventListener('click', () => {
   showModal(placeModal);
   resetError(placeModal);
+  formPlace.reset();
 });
 closeTitleButton.addEventListener('click', () => showModal(titleModal));
 closePlaceButton.addEventListener('click', () => {
   showModal(placeModal);
-  formPlace.reset();
 });
 closeLBButton.addEventListener('click', () => showModal(lbModal));
 formTitle.addEventListener('submit', formTitleSubmitHandler);
