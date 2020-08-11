@@ -5,6 +5,7 @@
   border: 1px solid black;
   box-sizing: border-box;
   border-radius: 2px;
+  cursor: default;
 }
 
 .modal__save-btn_disabled:hover {
