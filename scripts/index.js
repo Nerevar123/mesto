@@ -1,6 +1,7 @@
 import { initialCards, validateOptions } from './data.js';
-import Card from './Card.js';
+import { Card, lbModal } from './Card.js';
 import FormValidator from './FormValidator.js';
+import { showModal } from './utils.js';
 
 const places = document.querySelector('.places__list');
 const titleModal = document.querySelector('.modal_type_title');
@@ -13,6 +14,7 @@ const formTitle = document.forms.profile;
 const formPlace = document.forms.place;
 const closeTitleButton = titleModal.querySelector('.modal__close-btn');
 const closePlaceButton = placeModal.querySelector('.modal__close-btn');
+const closeLBButton = lbModal.querySelector('.modal__close-btn');
 const nameInput = formTitle.elements.nickname;
 const descInput = formTitle.elements.desc;
 const placeInput = formPlace.elements.place;
@@ -35,32 +37,6 @@ titleValidator.enableValidation();
 const placeValidator = new FormValidator(placeModal, validateOptions);
 placeValidator.enableValidation();
 
-const closeModalWithEsc = (evt) => {
-  if (evt.key === "Escape") {
-    const openedModal = document.querySelector('.modal_opened');
-    if (openedModal) {
-      showModal(openedModal);
-    };
-  };
-};
-
-const closeModalWithClick = (evt) => {
-  if (evt.target.classList.contains('modal')) {
-    showModal(evt.target);
-  };
-};
-
-export const showModal = (modal) => {
-  modal.classList.toggle('modal_opened');
-  if (modal.classList.contains('modal_opened')) {
-    document.addEventListener('mousedown', closeModalWithClick);
-    document.addEventListener('keydown', closeModalWithEsc);
-  } else {
-    document.removeEventListener('mousedown', closeModalWithClick);
-    document.removeEventListener('keydown', closeModalWithEsc);
-  };
-};
-
 const formTitleSubmitHandler = (evt) => {
   evt.preventDefault();
   nameProfile.textContent = nameInput.value;
@@ -71,7 +47,7 @@ const formTitleSubmitHandler = (evt) => {
 
 const formPlaceSubmitHandler = (evt) => {
   evt.preventDefault();
-  const place = [];
+  const place = {};
   place.name = placeInput.value;
   place.link = linkInput.value;
 
@@ -82,17 +58,18 @@ const formPlaceSubmitHandler = (evt) => {
 editButton.addEventListener('click', () => {
   nameInput.value = nameProfile.textContent;
   descInput.value = descProfile.textContent;
-  showModal(titleModal);
   titleValidator.resetError();
+  showModal(titleModal);
 });
 
 placeButton.addEventListener('click', () => {
-  showModal(placeModal);
   formPlace.reset();
   placeValidator.resetError();
+  showModal(placeModal);
 });
 
 closeTitleButton.addEventListener('click', () => showModal(titleModal));
 closePlaceButton.addEventListener('click', () => showModal(placeModal));
+closeLBButton.addEventListener('click', () => showModal(lbModal));
 formTitle.addEventListener('submit', formTitleSubmitHandler);
 formPlace.addEventListener('submit', formPlaceSubmitHandler);

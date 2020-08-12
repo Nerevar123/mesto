@@ -1,6 +1,10 @@
-import { showModal } from './index.js';
+import { showModal } from './utils.js';
 
-export default class Card {
+export const lbModal = document.querySelector('.modal_type_lightbox');
+const lbImage = document.querySelector('.modal__image');
+const lbCaption = document.querySelector('.modal__caption');
+
+export class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
     this._link = data.link;
@@ -23,21 +27,15 @@ export default class Card {
     this._element.addEventListener('click', (evt) => {
       if (evt.target.closest('.place__img-wrapper')) {
         this._showLbModal();
-      };
+      }
     });
   }
 
   _showLbModal() {
-    const lbModal = document.querySelector('.modal_type_lightbox');
     showModal(lbModal);
-
-    const lbImage = document.querySelector('.modal__image');
     lbImage.src = this._link;
     lbImage.alt = this._name;
-    document.querySelector('.modal__caption').textContent = this._name;
-
-    const closeLBButton = lbModal.querySelector('.modal__close-btn');
-    closeLBButton.addEventListener('click', () => showModal(lbModal));
+    lbCaption.textContent = this._name;
   }
 
   _toggleLike() {
@@ -46,6 +44,7 @@ export default class Card {
 
   _deleteCard() {
     this._element.closest('.place').remove();
+    this._element = null;
   }
 
   generateCard() {

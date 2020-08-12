@@ -1,7 +1,9 @@
 export default class FormValidator {
-  constructor(form, options) {
+  constructor(form, options, inputList, buttonElement) {
     this._form = form;
     this._options = options;
+    this._inputList = inputList;
+    this._buttonElement = buttonElement;
   }
 
   _showInputError(input, errorMessage) {
@@ -23,23 +25,23 @@ export default class FormValidator {
       this._showInputError(input, input.validationMessage);
     } else {
       this._hideInputError(input, input.validationMessage);
-    };
+    }
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((input) => {
+  _hasInvalidInput() {
+    return this._inputList.some((input) => {
       return !input.validity.valid;
     });
   }
 
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.setAttribute('disabled', true);
-      buttonElement.classList.add(this._options.inactiveButtonClass);
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.setAttribute('disabled', true);
+      this._buttonElement.classList.add(this._options.inactiveButtonClass);
     } else {
-      buttonElement.removeAttribute('disabled');
-      buttonElement.classList.remove(this._options.inactiveButtonClass);
-    };
+      this._buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._options.inactiveButtonClass);
+    }
   }
 
   _isEmpty(input) {
@@ -56,34 +58,34 @@ export default class FormValidator {
     placeholderElement.classList.remove('modal__placeholder_is-fixed');
   }
 
-  _checkInput(inputList, input, buttonElement) {
+  _checkInput(input) {
     this._checkInputValidity(input);
-    this._toggleButtonState(inputList, buttonElement);
+    this._toggleButtonState();
     this._isEmpty(input);
   }
 
   _setEventListeners() {
-    const inputList = Array.from(this._form.querySelectorAll(this._options.inputSelector));
-    const buttonElement = this._form.querySelector(this._options.submitButtonSelector);
+    this._inputList = Array.from(this._form.querySelectorAll(this._options.inputSelector));
+    this._buttonElement = this._form.querySelector(this._options.submitButtonSelector);
 
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
-        this._checkInput(inputList, input, buttonElement);
+        this._checkInput(input);
       });
     });
   }
 
   resetError() {
-    const inputList = Array.from(this._form.querySelectorAll(this._options.inputSelector));
-    const buttonElement = this._form.querySelector(this._options.submitButtonSelector);
+    this._inputList = Array.from(this._form.querySelectorAll(this._options.inputSelector));
+    this._buttonElement = this._form.querySelector(this._options.submitButtonSelector);
 
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       if (this._form.classList.contains(this._options.placeModal)) {
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
         this._hideInputError(input, input.validationMessage);
       } else {
-        this._checkInput(inputList, input, buttonElement);
-      };
+        this._checkInput(input);
+      }
     });
   }
 
