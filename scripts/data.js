@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
       name: 'Архыз',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
@@ -24,3 +24,13 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
   }
 ];
+
+export const validateOptions = {
+  formSelector: '.modal__form',
+  inputSelector: '.modal__input',
+  submitButtonSelector: '.modal__save-btn',
+  inactiveButtonClass: 'modal__save-btn_disabled',
+  inputErrorClass: 'modal__input_type_error',
+  errorClass: 'modal__input-error_active',
+  placeModal: 'modal_type_place'
+};

@@ -16,6 +16,11 @@ https://nerevar123.github.io/mesto/index.html
 
 **Change-log**
 
+_v1.3_
+
+Выполнен ООП-рефакторинг кода, добавлены классы и модули.
+
+
 _v1.2_
 
 Добавлена валидация через JavaScript.

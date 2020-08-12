@@ -1,63 +1,39 @@
+import { initialCards, validateOptions } from './data.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
 const places = document.querySelector('.places__list');
 const titleModal = document.querySelector('.modal_type_title');
 const placeModal = document.querySelector('.modal_type_place');
-const lbModal = document.querySelector('.modal_type_lightbox');
 const editButton = document.querySelector('.profile__edit-btn');
 const placeButton = document.querySelector('.profile__add-btn');
 const nameProfile = document.querySelector('.profile__name');
 const descProfile = document.querySelector('.profile__desc');
-const placeTemplate = document.querySelector('#place-template').content;
 const formTitle = document.forms.profile;
 const formPlace = document.forms.place;
 const closeTitleButton = titleModal.querySelector('.modal__close-btn');
 const closePlaceButton = placeModal.querySelector('.modal__close-btn');
-const closeLBButton = lbModal.querySelector('.modal__close-btn');
 const nameInput = formTitle.elements.nickname;
 const descInput = formTitle.elements.desc;
 const placeInput = formPlace.elements.place;
 const linkInput = formPlace.elements.link;
-const lbImage = document.querySelector('.modal__image');
-const lbCaption = document.querySelector('.modal__caption');
 
-const toggleLike = (evt) => {
-  evt.target.classList.toggle('place__like-btn_active');
-};
+const createPlace = (place) => {
+  const card = new Card(place, '#place-template');
+  const cardElement = card.generateCard();
 
-const deleteCard = (evt) => {
-  evt.target.closest('.place').remove();
-};
-
-const createPlace = (placeName, placeLink) => {
-  const placeElem = placeTemplate.cloneNode(true);
-  const place = placeElem.querySelector('.place');
-  const placeImage = placeElem.querySelector('.place__image');
-  placeElem.querySelector('.place__title').textContent = placeName;
-  placeImage.src = placeLink;
-  placeImage.alt = placeName;
-  placeElem.querySelector('.place__like-btn').addEventListener('click', (evt) => toggleLike(evt));
-  placeElem.querySelector('.place__delete-btn').addEventListener('click', (evt) => deleteCard(evt));
-  place.addEventListener('click', (evt) => {
-    if (evt.target.closest('.place__img-wrapper')) {
-      showLbModal(placeName, placeLink);
-    };
-  });
-  renderPlace (placeElem);
-};
-
-const renderPlace = (place) => {
-  places.prepend(place);
+  places.prepend(cardElement);
 };
 
 initialCards.reverse().forEach((place) => {
-  createPlace (place.name, place.link);
+  createPlace (place);
 });
 
-const showLbModal = (placeName, placeLink) => {
-  showModal(lbModal);
-  lbImage.src = placeLink;
-  lbCaption.textContent = placeName;
-  lbImage.alt = lbCaption.textContent;
-};
+const titleValidator = new FormValidator(titleModal, validateOptions);
+titleValidator.enableValidation();
+
+const placeValidator = new FormValidator(placeModal, validateOptions);
+placeValidator.enableValidation();
 
 const closeModalWithEsc = (evt) => {
   if (evt.key === "Escape") {
@@ -74,19 +50,7 @@ const closeModalWithClick = (evt) => {
   };
 };
 
-const resetError = (modal) => {
-  const submitButton = modal.querySelector('.modal__save-btn');
-  const inputs = Array.from(modal.querySelectorAll('.modal__input'));
-  inputs.forEach((input) => {
-    if (modal === placeModal) {
-      hideInputError(modal, input, obj.inputErrorClass, obj.errorClass);
-    } else {
-      checkInput(modal, inputs, input, submitButton, obj);
-    };
-  });
-};
-
-const showModal = (modal) => {
+export const showModal = (modal) => {
   modal.classList.toggle('modal_opened');
   if (modal.classList.contains('modal_opened')) {
     document.addEventListener('mousedown', closeModalWithClick);
@@ -101,12 +65,17 @@ const formTitleSubmitHandler = (evt) => {
   evt.preventDefault();
   nameProfile.textContent = nameInput.value;
   descProfile.textContent = descInput.value;
+
   showModal(titleModal);
 };
 
 const formPlaceSubmitHandler = (evt) => {
   evt.preventDefault();
-  createPlace (placeInput.value, linkInput.value);
+  const place = [];
+  place.name = placeInput.value;
+  place.link = linkInput.value;
+
+  createPlace (place);
   showModal(placeModal);
 };
 
@@ -114,17 +83,16 @@ editButton.addEventListener('click', () => {
   nameInput.value = nameProfile.textContent;
   descInput.value = descProfile.textContent;
   showModal(titleModal);
-  resetError(titleModal);
+  titleValidator.resetError();
 });
+
 placeButton.addEventListener('click', () => {
   showModal(placeModal);
-  resetError(placeModal);
   formPlace.reset();
+  placeValidator.resetError();
 });
+
 closeTitleButton.addEventListener('click', () => showModal(titleModal));
-closePlaceButton.addEventListener('click', () => {
-  showModal(placeModal);
-});
-closeLBButton.addEventListener('click', () => showModal(lbModal));
+closePlaceButton.addEventListener('click', () => showModal(placeModal));
 formTitle.addEventListener('submit', formTitleSubmitHandler);
 formPlace.addEventListener('submit', formPlaceSubmitHandler);
