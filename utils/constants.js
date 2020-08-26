@@ -34,3 +34,19 @@ export const validateOptions = {
   errorClass: 'modal__input-error_active',
   placeModal: 'modal_type_place'
 };
+
+export const places = '.places__list';
+export const inputs = document.querySelectorAll('.modal__input');
+
+export const lbImage = document.querySelector('.modal__image');
+export const lbCaption = document.querySelector('.modal__caption');
+
+export const editButton = document.querySelector('.profile__edit-btn');
+export const placeButton = document.querySelector('.profile__add-btn');
+
+
+
+
+
+
+

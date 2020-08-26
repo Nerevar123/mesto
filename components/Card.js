@@ -1,14 +1,9 @@
-import { showModal } from './utils.js';
-
-export const lbModal = document.querySelector('.modal_type_lightbox');
-const lbImage = document.querySelector('.modal__image');
-const lbCaption = document.querySelector('.modal__caption');
-
-export class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-    this._link = data.link;
+export default class Card {
+  constructor({ name, link }, cardSelector, handleCardClick) {
+    this._name = name;
+    this._link = link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -26,16 +21,9 @@ export class Card {
     this._element.querySelector('.place__delete-btn').addEventListener('click', () => this._deleteCard());
     this._element.addEventListener('click', (evt) => {
       if (evt.target.closest('.place__img-wrapper')) {
-        this._showLbModal();
+        this._handleCardClick();
       }
     });
-  }
-
-  _showLbModal() {
-    showModal(lbModal);
-    lbImage.src = this._link;
-    lbImage.alt = this._name;
-    lbCaption.textContent = this._name;
   }
 
   _toggleLike() {
