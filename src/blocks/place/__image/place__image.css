@@ -3,4 +3,6 @@
   height: 282px;
   vertical-align: top;
   cursor: pointer;
+  object-fit: cover;
+  object-position: top;
 }

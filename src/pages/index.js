@@ -2,8 +2,8 @@ import './index.css';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
-import FormModal from '../components/FormModal.js';
-import LbModal from '../components/LbModal.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
 import {
   initialCards,
@@ -28,8 +28,8 @@ const placesList = new Section({
     item,
     '#place-template',
     () => {
-      const lbModal = new LbModal('.modal_type_lightbox', item);
-      lbModal.open();
+      const ImagePopup = new PopupWithImage('.modal_type_lightbox');
+      ImagePopup.open(item);
       }
     );
     const placeElement = place.generateCard();
@@ -39,32 +39,24 @@ const placesList = new Section({
   places
 );
 
-const titleModal = new FormModal({
+const titleModal = new PopupWithForm({
   modalSelector: '.modal_type_title',
-  submitHandler: (form) => {
-    form.preventDefault();
-    info.setUserInfo(nameInput.value, descInput.value);
-    titleModal.close();
+  submitHandler: ({ nickname, desc }) => {
+    info.setUserInfo(nickname, desc);
   }
 });
 
-const placeModal = new FormModal({
+const placeModal = new PopupWithForm({
   modalSelector: '.modal_type_place',
-  submitHandler: (form) => {
-    form.preventDefault();
-    const newName = placeInput.value;
-    const newLink = linkInput.value;
-
+  submitHandler: (data) => {
     const newPlace = new Section({
       renderer: () => {
-        const place = new Card({
-          name: newName,
-          link: newLink
-        },
+        const place = new Card(
+        data,
         '#place-template',
         () => {
-          const lbModal = new LbModal('.modal_type_lightbox', { name: newName, link: newLink });
-          lbModal.open();
+          const ImagePopup = new PopupWithImage('.modal_type_lightbox');
+          ImagePopup.open(data);
           }
         );
         const placeElement = place.generateCard();
@@ -76,7 +68,6 @@ const placeModal = new FormModal({
     );
 
     newPlace._renderer();
-    placeModal.close();
   }
 });
 

@@ -1,4 +1,4 @@
-export default class Modal {
+export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
   }

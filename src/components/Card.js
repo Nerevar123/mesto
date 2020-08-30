@@ -21,7 +21,7 @@ export default class Card {
     this._element.querySelector('.place__delete-btn').addEventListener('click', () => this._deleteCard());
     this._element.addEventListener('click', (evt) => {
       if (evt.target.closest('.place__img-wrapper')) {
-        this._handleCardClick();
+        this._handleCardClick(this._name, this._link);
       }
     });
   }
