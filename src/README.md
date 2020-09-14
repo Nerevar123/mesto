@@ -7,15 +7,20 @@
 * HTML;
 * CSS;
 * JavaScript;
-* Отзывчивая вёрстка;
 * БЭМ методология;
 * Webpack;
+* ООП;
+* API;
 
 **Ссылка на проект**
 
 https://nerevar123.github.io/mesto/index.html
 
 **Change-log**
+
+_v1.5_
+
+Добавлено взаимодействие с сервером через API.
 
 _v1.4_
 

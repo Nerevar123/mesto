@@ -1,3 +1,5 @@
+@import url(./__like/place__like.css);
+@import url(./__like-count/place__like-count.css);
 @import url(./__like-btn/place__like-btn.css);
 @import url(./__like-btn/_active/place__like-btn_active.css);
 @import url(./__header/place__header.css);

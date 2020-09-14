@@ -80,9 +80,10 @@ export default class FormValidator {
     this._buttonElement = this._form.querySelector(this._options.submitButtonSelector);
 
     this._inputList.forEach((input) => {
-      if (this._form.classList.contains(this._options.placeModal)) {
+      if (this._form.classList.contains(this._options.placeModal) || this._form.classList.contains(this._options.avatarModal)) {
         this._toggleButtonState();
         this._hideInputError(input, input.validationMessage);
+        this._isEmpty(input);
       } else {
         this._checkInput(input);
       }
