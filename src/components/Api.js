@@ -1,31 +1,29 @@
-const checkError = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-
-  return Promise.reject(`Error: ${res.status}`)
-};
-
 export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
+  _checkError(res) {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(`Error: ${res.status}`)
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
       })
-      .then(checkError)
-      .catch(err => console.log(err));
+      .then(this._checkError);
   }
 
   getInitCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
       })
-      .then(checkError)
-      .catch(err => console.log(err));
+      .then(this._checkError);
   }
 
   patchUserInfo(info) {
@@ -34,8 +32,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(info)
     })
-    .then(checkError)
-    .catch(err => console.log(err));
+    .then(this._checkError);
   }
 
   addCard(card) {
@@ -44,8 +41,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(card)
     })
-    .then(checkError)
-    .catch(err => console.log(err));
+    .then(this._checkError);
   }
 
   deleteCard(id) {
@@ -53,8 +49,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-    .then(checkError)
-    .catch(err => console.log(err));
+    .then(this._checkError);
   }
 
   putLike(id) {
@@ -62,8 +57,7 @@ export default class Api {
       method: "PUT",
       headers: this._headers
       })
-      .then(checkError)
-      .catch(err => console.log(err));
+      .then(this._checkError);
   }
 
   deleteLike(id) {
@@ -71,8 +65,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers
       })
-      .then(checkError)
-      .catch(err => console.log(err));
+      .then(this._checkError);
   }
 
   patchAvatar(avatar) {
@@ -81,7 +74,6 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(avatar)
     })
-    .then(checkError)
-    .catch(err => console.log(err));
+    .then(this._checkError);
   }
 }

@@ -32,37 +32,15 @@ const info = new UserInfo({
   avatar: '.profile__avatar'
 });
 
-const handleLike = (evt, id, elem) => {
-  if (evt.target.classList.contains('place__like-btn_active')) {
-    api.deleteLike(id)
-    .then((res) => {
-      evt.target.nextElementSibling.textContent = res.likes.length;
-      elem.toggleLike();
-    })
-    .catch(err => console.log(err));
-  } else {
-    api.putLike(id)
-    .then((res) => {
-      evt.target.nextElementSibling.textContent = res.likes.length;
-      elem.toggleLike();
-    })
-    .catch(err => console.log(err));
-  }
-};
+const ImagePopup = new PopupWithImage('.modal_type_lightbox');
 
-const handleCardClick = (elem) => {
-  const ImagePopup = new PopupWithImage('.modal_type_lightbox');
-
-  ImagePopup.open(elem);
-};
-
-const handleDeleteIcon = (id, elem) => {
+const handleDeleteIcon = (elem) => {
   const confirmModal = new PopupWithForm({
     modalSelector: '.modal_type_confirm',
     submitHandler: () => {
       confirmModal.setButtonPhrase('Удаление...');
 
-      api.deleteCard(id)
+      api.deleteCard(elem._id)
       .then (() => {
         elem.deleteCard();
         confirmModal.close();
@@ -74,23 +52,51 @@ const handleDeleteIcon = (id, elem) => {
   confirmModal.open();
 };
 
+const handleLike = (evt, elem) => {
+  if (evt.target.classList.contains('place__like-btn_active')) {
+    evt.target.style.visibility = "hidden";
+    api.deleteLike(elem._id)
+    .then((res) => {
+      evt.target.nextElementSibling.textContent = res.likes.length;
+      elem.toggleLike();
+      evt.target.style.visibility = "visible";
+    })
+    .catch(err => console.log(err));
+  } else {
+    evt.target.style.visibility = "hidden";
+    api.putLike(elem._id)
+    .then((res) => {
+      evt.target.nextElementSibling.textContent = res.likes.length;
+      elem.toggleLike();
+      evt.target.style.visibility = "visible";
+    })
+    .catch(err => console.log(err));
+  }
+};
+
+const createCard = (item) => {
+  const card = new Card({
+    data: item,
+    handleCardClick: () => ImagePopup.open(item),
+    handleLikeClick: (evt) => handleLike(evt, card),
+    handleDeleteIconClick: () => handleDeleteIcon(card)
+  },
+  '#place-template',
+  () => {
+    const ImagePopup = new PopupWithImage('.modal_type_lightbox');
+    ImagePopup.open(item);
+    }
+  );
+
+  return card
+};
+
 Promise.all([api.getInitCards(),api.getUserInfo()])
 .then(([ cards, data ]) => {
     const placesList = new Section({
       items: cards,
       renderer: (item) => {
-        const place = new Card({
-          data: item,
-          handleCardClick: () => handleCardClick(item),
-          handleLikeClick: (evt, id) => handleLike(evt, id, place),
-          handleDeleteIconClick: (id) => handleDeleteIcon(id, place)
-        },
-        '#place-template',
-        () => {
-          const ImagePopup = new PopupWithImage('.modal_type_lightbox');
-          ImagePopup.open(item);
-          }
-        );
+        const place = createCard(item);
         const placeElement = place.generateCard();
         placesList.addItem(placeElement);
         }
@@ -139,14 +145,7 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
       .then(data => {
         const newPlace = new Section({
           renderer: () => {
-            const place = new Card({
-              data: data,
-              handleCardClick: () => handleCardClick(item),
-              handleLikeClick: (evt, id) => handleLike(evt, id, place),
-              handleDeleteIconClick: (id) => handleDeleteIcon(id, place)
-            },
-            '#place-template',
-            );
+            const place = createCard(data);
             const placeElement = place.generateCard();
 
             newPlace.addItem(placeElement);
