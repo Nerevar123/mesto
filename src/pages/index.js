@@ -33,6 +33,16 @@ const info = new UserInfo({
   avatar: '.profile__avatar'
 });
 
+const newSection = new Section({
+  renderer: (item) => {
+    const place = createCard(item);
+    const placeElement = place.generateCard();
+    newSection.addItem(placeElement);
+    }
+  },
+  places
+);
+
 const ImagePopup = new PopupWithImage('.modal_type_lightbox');
 
 const confirmModal = new PopupWithConfirm({
@@ -86,19 +96,9 @@ const createCard = (item) => {
 
 Promise.all([api.getInitCards(),api.getUserInfo()])
 .then(([ cards, data ]) => {
-    const placesList = new Section({
-      items: cards,
-      renderer: (item) => {
-        const place = createCard(item);
-        const placeElement = place.generateCard();
-        placesList.addItem(placeElement);
-        }
-      },
-      places
-    );
-    placesList.renderItems();
+  newSection.renderItems(cards);
 
-    info.setUserInfo(data.name, data.about, data.avatar);
+  info.setUserInfo(data.name, data.about, data.avatar);
 })
 .then(() => {
   const titleModal = new PopupWithForm({
@@ -136,18 +136,7 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
 
       api.addCard(data)
       .then(data => {
-        const newPlace = new Section({
-          renderer: () => {
-            const place = createCard(data);
-            const placeElement = place.generateCard();
-
-            newPlace.addItem(placeElement);
-            }
-          },
-          places
-        );
-        newPlace._renderer();
-
+        newSection.renderItem(data);
         placeModal.close();
       })
       .catch(err => console.log(err));
@@ -181,6 +170,5 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
     placeValidator.resetError();
     placeModal.open();
   });
-
 })
 .catch(err => console.log(err));
