@@ -4,6 +4,7 @@ import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import FormValidator from '../components/FormValidator.js';
 import Api from '../components/Api.js';
 import {
@@ -34,23 +35,19 @@ const info = new UserInfo({
 
 const ImagePopup = new PopupWithImage('.modal_type_lightbox');
 
-const handleDeleteIcon = (elem) => {
-  const confirmModal = new PopupWithForm({
-    modalSelector: '.modal_type_confirm',
-    submitHandler: () => {
-      confirmModal.setButtonPhrase('Удаление...');
+const confirmModal = new PopupWithConfirm({
+  modalSelector: '.modal_type_confirm',
+  submitHandler: (elem) => {
+    confirmModal.setButtonPhrase('Удаление...');
 
-      api.deleteCard(elem._id)
-      .then (() => {
-        elem.deleteCard();
-        confirmModal.close();
-      })
-      .catch(err => console.log(err));
-    }
-  });
-
-  confirmModal.open();
-};
+    api.deleteCard(elem._id)
+    .then (() => {
+      elem.deleteCard();
+      confirmModal.close();
+    })
+    .catch(err => console.log(err));
+  }
+});
 
 const handleLike = (evt, elem) => {
   if (evt.target.classList.contains('place__like-btn_active')) {
@@ -79,13 +76,9 @@ const createCard = (item) => {
     data: item,
     handleCardClick: () => ImagePopup.open(item),
     handleLikeClick: (evt) => handleLike(evt, card),
-    handleDeleteIconClick: () => handleDeleteIcon(card)
+    handleDeleteIconClick: () => confirmModal.open(card)
   },
-  '#place-template',
-  () => {
-    const ImagePopup = new PopupWithImage('.modal_type_lightbox');
-    ImagePopup.open(item);
-    }
+  '#place-template'
   );
 
   return card
