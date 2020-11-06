@@ -1,6 +1,6 @@
 export default class FormValidator {
   constructor(form, options, inputList, buttonElement) {
-    this._form = document.querySelector(form);;
+    this._form = document.querySelector(form);
     this._options = options;
     this._inputList = inputList;
     this._buttonElement = buttonElement;

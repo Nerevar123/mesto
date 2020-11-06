@@ -34,8 +34,8 @@ const info = new UserInfo({
 });
 
 const newSection = new Section({
-  renderer: (item) => {
-    const place = createCard(item);
+  renderer: (item, id) => {
+    const place = createCard(item, id);
     const placeElement = place.generateCard();
     newSection.addItem(placeElement);
     }
@@ -53,9 +53,9 @@ const confirmModal = new PopupWithConfirm({
     api.deleteCard(elem._id)
     .then (() => {
       elem.deleteCard();
-      confirmModal.close();
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
+    .finally(() => confirmModal.close());
   }
 });
 
@@ -81,9 +81,10 @@ const handleLike = (evt, elem) => {
   }
 };
 
-const createCard = (item) => {
+const createCard = (item, id) => {
   const card = new Card({
     data: item,
+    userId: id,
     handleCardClick: () => ImagePopup.open(item),
     handleLikeClick: (evt) => handleLike(evt, card),
     handleDeleteIconClick: () => confirmModal.open(card)
@@ -96,11 +97,14 @@ const createCard = (item) => {
 
 Promise.all([api.getInitCards(),api.getUserInfo()])
 .then(([ cards, data ]) => {
-  newSection.renderItems(cards);
+  const userId = data._id;
 
+  newSection.renderItems(cards, userId);
   info.setUserInfo(data.name, data.about, data.avatar);
+
+  return userId
 })
-.then(() => {
+.then((userId) => {
   const titleModal = new PopupWithForm({
     modalSelector: '.modal_type_title',
     submitHandler: ({ nickname, desc }) => {
@@ -109,9 +113,9 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
       api.patchUserInfo({ name: nickname, about: desc })
       .then(data => {
         info.setUserInfo(data.name, data.about, data.avatar);
-        titleModal.close();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => titleModal.close());
     }
   });
 
@@ -123,9 +127,9 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
       api.patchAvatar({avatar: input.avatar})
       .then(input => {
         avatarLink.src = input.avatar;
-        avatarModal.close();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => avatarModal.close());
     }
   });
 
@@ -136,10 +140,10 @@ Promise.all([api.getInitCards(),api.getUserInfo()])
 
       api.addCard(data)
       .then(data => {
-        newSection.renderItem(data);
-        placeModal.close();
+        newSection.renderItem(data, userId);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => placeModal.close());
     }
   });
 
